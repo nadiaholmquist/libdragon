@@ -54,6 +54,8 @@ _start:
 
 	jal __do_global_ctors		/* call global constructors */
 	nop
+	jal __environment_init      /* initialize environment variables */
+	nop
 	li a0, 0
 	jal main					/* call main app */
 	li a1, 0

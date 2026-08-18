@@ -90,7 +90,8 @@ LIBDRAGON_OBJS += \
 	$(BUILD_DIR)/sram.o \
 	$(BUILD_DIR)/ucontext.o \
 	$(BUILD_DIR)/ucontext_asm.o \
-	$(BUILD_DIR)/coroutine.o
+	$(BUILD_DIR)/coroutine.o \
+	$(BUILD_DIR)/environment.o 
 
 include $(SOURCE_DIR)/kernel/libdragon.mk
 include $(SOURCE_DIR)/audio/libdragon.mk
