@@ -183,14 +183,24 @@ gen-version:
 		cp libdragon.version "$(BUILD_DIR)/libdragon.version"; \
 	fi;
 
-install: install-mk libdragon
+# The N32 ABI uses the BFD target "elf32-nbigmips" instead of the regular "elf32-bigmips"
+# so we might need to replace the target in the linker script here
+ifeq ($(N64_ABI),n32)
+$(BUILD_DIR)/%.ld: %.ld
+	sed -E 's/elf32-(big|little)mips/elf32-n\1mips/g' $< > $@
+else
+$(BUILD_DIR)/%.ld: %.ld
+	cp $< $@
+endif
+
+install: install-mk libdragon $(BUILD_DIR)/n64.ld $(BUILD_DIR)/dso.ld
 	@echo "    [INSTALL] libdragon"
-	mkdir -p $(INSTALLDIR)/$(N64_TARGET)/lib
-	install -Cv -m 0644 libdragon.a $(INSTALLDIR)/$(N64_TARGET)/lib/libdragon.a
-	install -Cv -m 0644 n64.ld $(INSTALLDIR)/$(N64_TARGET)/lib/n64.ld
-	install -Cv -m 0644 dso.ld $(INSTALLDIR)/$(N64_TARGET)/lib/dso.ld
+	mkdir -p $(INSTALLDIR)/$(N64_TARGET)/lib/$(N64_MULTILIB_DIR)
+	install -Cv -m 0644 libdragon.a $(INSTALLDIR)/$(N64_TARGET)/lib/$(N64_MULTILIB_DIR)/libdragon.a
+	install -Cv -m 0644 $(BUILD_DIR)/n64.ld $(INSTALLDIR)/$(N64_TARGET)/lib/$(N64_MULTILIB_DIR)/n64.ld
+	install -Cv -m 0644 $(BUILD_DIR)/dso.ld $(INSTALLDIR)/$(N64_TARGET)/lib/$(N64_MULTILIB_DIR)/dso.ld
 	install -Cv -m 0644 rsp.ld $(INSTALLDIR)/$(N64_TARGET)/lib/rsp.ld
-	install -Cv -m 0644 libdragonsys.a $(INSTALLDIR)/$(N64_TARGET)/lib/libdragonsys.a
+	install -Cv -m 0644 libdragonsys.a $(INSTALLDIR)/$(N64_TARGET)/lib/$(N64_MULTILIB_DIR)/libdragonsys.a
 	@echo "    [INSTALL] libdragon.version"
 	mkdir -p $(INSTALLDIR)/$(N64_TARGET)/include
 	if [ -f "$(BUILD_DIR)/libdragon.version" ]; then \
