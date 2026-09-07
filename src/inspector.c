@@ -79,7 +79,11 @@ static bool page_scroll_on;
 
 const char *__mips_gpr[34] = {
 	"zr", "at", "v0", "v1", "a0", "a1", "a2", "a3",
+#if !defined(_MIPS_SIM) || _MIPS_SIM == _ABIN32
+	"a4", "a5", "a6", "a7", "t0", "t1", "t2", "t3",
+#else
 	"t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7",
+#endif
 	"s0", "s1", "s2", "s3", "s4", "s5", "s6", "s7",
 	"t8", "t9", "k0", "k1", "gp", "sp", "s8", "ra",
     "lo", "hi"
