@@ -8,6 +8,14 @@
 # after the end of the output buffer. The outut buffer must have been sized
 # accordingly to accomodate for this.
 
+#if !defined(_MIPS_SIM) || _MIPS_SIM == _ABIN32
+#define t4 a4
+#define t5 a5
+#define t6 a6
+#define t7 a7
+#else
+#endif
+
 #define DMA_RACE_MARGIN     16
 #define PI_STATUS           0xA4600010
 #define PI_DRAM_ADDR        0xA4600000

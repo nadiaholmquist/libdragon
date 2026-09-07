@@ -14,12 +14,21 @@
 
 #define intervalsize    $t2   
 #define intervalvalue   $t3
+#if !defined(_MIPS_SIM) || _MIPS_SIM == _ABIN32
+#define nbits           $a4
+#define match_off       $a5
+#define prev_match      $a6
+#define lit_len         $a7
+#define match_len       $a7
+#define num_len         $a7
+#else
 #define nbits           $t4
 #define match_off       $t5
 #define prev_match      $t6
 #define lit_len         $t7
 #define match_len       $t7
 #define num_len         $t7
+#endif
 #define ctx             $t8
 #define outbuf_orig     $t9
 #define parity          $v1

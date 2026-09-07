@@ -3,6 +3,7 @@
 #
 # Authors: Giovanni Bajo <giovannibajo@gmail.com>
 ############################################################
+
 #define DMA_RACE_MARGIN     16
 #define PI_STATUS           0xA4600010
 #define PI_DRAM_ADDR        0xA4600000
@@ -11,10 +12,17 @@
 #define outbuf      $a2
 #define nlit        $t2
 #define cc          $t3
+#if !defined(_MIPS_SIM) || _MIPS_SIM == _ABIN32
+#define cc_count    $a4
+#define match_off   $a5
+#define match_len   $a6
+#define outbuf_orig $a7
+#else
 #define cc_count    $t4
 #define match_off   $t5
 #define match_len   $t6
 #define outbuf_orig $t7
+#endif
 #define dma_ptr     $t8
 
 #define ra2         $a1
