@@ -331,6 +331,14 @@ end_exception_restore_all:
 	ld $23,(STACK_GPR+23*8)(sp)   # S7
 	ld $28,(STACK_GPR+28*8)(sp)   # GP
 	ld $30,(STACK_GPR+30*8)(sp)   # FP
+#if defined(_MIPS_SIM) && _MIPS_SIM == _ABIN32
+	ldc1 $f20,(STACK_FPR+20*8)(sp)
+	ldc1 $f22,(STACK_FPR+22*8)(sp)
+	ldc1 $f24,(STACK_FPR+24*8)(sp)
+	ldc1 $f26,(STACK_FPR+26*8)(sp)
+	ldc1 $f28,(STACK_FPR+28*8)(sp)
+	ldc1 $f30,(STACK_FPR+30*8)(sp)
+#else
 	ldc1 $f20,(STACK_FPR+20*8)(sp)
 	ldc1 $f21,(STACK_FPR+21*8)(sp)
 	ldc1 $f22,(STACK_FPR+22*8)(sp)
@@ -343,6 +351,7 @@ end_exception_restore_all:
 	ldc1 $f29,(STACK_FPR+29*8)(sp)
 	ldc1 $f30,(STACK_FPR+30*8)(sp)
 	ldc1 $f31,(STACK_FPR+31*8)(sp)
+#endif
 
 end_interrupt:
 	mfc0 t0, C0_SR
@@ -370,6 +379,14 @@ end_interrupt:
 	ldc1 $f17,(STACK_FPR+17*8)(sp)
 	ldc1 $f18,(STACK_FPR+18*8)(sp)
 	ldc1 $f19,(STACK_FPR+19*8)(sp)
+#if defined(_MIPS_SIM) && _MIPS_SIM == _ABIN32
+	ldc1 $f21,(STACK_FPR+21*8)(sp)
+	ldc1 $f23,(STACK_FPR+23*8)(sp)
+	ldc1 $f25,(STACK_FPR+25*8)(sp)
+	ldc1 $f27,(STACK_FPR+27*8)(sp)
+	ldc1 $f29,(STACK_FPR+29*8)(sp)
+	ldc1 $f31,(STACK_FPR+31*8)(sp)
+#endif
 
 	lw t0, STACK_FC31(sp)
 	ctc1 t0, $f31
@@ -428,6 +445,14 @@ finalize_exception_frame:
 	addiu $1, sp, EXC_STACK_SIZE
 	sd $1, (STACK_GPR+29*8)(sp)   # SP
 	sd $30,(STACK_GPR+30*8)(sp)   # FP
+#if defined(_MIPS_SIM) && _MIPS_SIM == _ABIN32
+	sdc1 $f20,(STACK_FPR+20*8)(sp)
+	sdc1 $f22,(STACK_FPR+22*8)(sp)
+	sdc1 $f24,(STACK_FPR+24*8)(sp)
+	sdc1 $f26,(STACK_FPR+26*8)(sp)
+	sdc1 $f28,(STACK_FPR+28*8)(sp)
+	sdc1 $f30,(STACK_FPR+30*8)(sp)
+#else
 	sdc1 $f20,(STACK_FPR+20*8)(sp)
 	sdc1 $f21,(STACK_FPR+21*8)(sp)
 	sdc1 $f22,(STACK_FPR+22*8)(sp)
@@ -440,6 +465,7 @@ finalize_exception_frame:
 	sdc1 $f29,(STACK_FPR+29*8)(sp)
 	sdc1 $f30,(STACK_FPR+30*8)(sp)
 	sdc1 $f31,(STACK_FPR+31*8)(sp)
+#endif
 	jr ra
 	nop
 
@@ -467,6 +493,14 @@ save_fpu_regs:
 	sdc1 $f17,(STACK_FPR+17*8)(a0)
 	sdc1 $f18,(STACK_FPR+18*8)(a0)
 	sdc1 $f19,(STACK_FPR+19*8)(a0)
+#if defined(_MIPS_SIM) && _MIPS_SIM == _ABIN32
+	sdc1 $f21,(STACK_FPR+21*8)(sp)
+	sdc1 $f23,(STACK_FPR+23*8)(sp)
+	sdc1 $f25,(STACK_FPR+25*8)(sp)
+	sdc1 $f27,(STACK_FPR+27*8)(sp)
+	sdc1 $f29,(STACK_FPR+29*8)(sp)
+	sdc1 $f31,(STACK_FPR+31*8)(sp)
+#endif
 	jr ra
 	nop
 inthandler_end:

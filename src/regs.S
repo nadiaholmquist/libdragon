@@ -28,6 +28,7 @@
 #define a1	$5
 #define a2	$6
 #define a3	$7
+#if defined(_MIPS_SIM) && _MIPS_SIM == _ABIN32
 #define t0	$8
 #define t1	$9
 #define t2	$10
@@ -36,6 +37,20 @@
 #define t5	$13
 #define t6	$14
 #define t7	$15
+#else
+#define a4	$8
+#define t4	$8
+#define a5	$9
+#define t5	$9
+#define a6	$10
+#define t6	$10
+#define a7	$11
+#define t7	$11
+#define t0	$12
+#define t1	$13
+#define t2	$14
+#define t3	$15
+#endif
 #define s0	$16
 #define s1	$17
 #define s2	$18
